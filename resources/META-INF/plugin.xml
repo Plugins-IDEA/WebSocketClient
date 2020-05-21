@@ -1,0 +1,102 @@
+<idea-plugin>
+	<id>io.github.whimthen.websocket</id>
+	<name>WebSocket Client</name>
+	<version>1.0</version>
+	<vendor email="whimthen@gmail.com" url="https://github.com/whimthen">WHIM THEN</vendor>
+
+	<description><![CDATA[
+      A WebSocket Client Tools for IntelliJ Platform
+    ]]></description>
+
+	<change-notes><![CDATA[
+      Now No Changes...............................
+    ]]>
+	</change-notes>
+
+	<!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+	<idea-version since-build="173.0"/>
+
+	<!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+		 on how to target different products -->
+	<depends>com.intellij.modules.platform</depends>
+	<depends>com.intellij.java</depends>
+<!--	<depends>com.intellij.modules.lang</depends>-->
+<!--	<depends>com.intellij.modules.java</depends>-->
+
+	<extensions defaultExtensionNs="com.intellij">
+		<!-- Add your extensions here -->
+		<toolWindow id="WebSocket"
+		            doNotActivateOnStart="true"
+		            anchor="bottom"
+		            icon="AllIcons.Actions.GroupByPrefix"
+		            canCloseContents="true"
+		            secondary="true"
+		            factoryClass="io.github.whimthen.websocket.WebSocketToolWindow"/>
+		<applicationService serviceInterface="io.github.whimthen.websocket.service.WebSocketService"
+		                    serviceImplementation="io.github.whimthen.websocket.service.impl.WebSocketServiceImpl"/>
+		<applicationService serviceInterface="io.github.whimthen.websocket.service.HistoryService"
+		                    serviceImplementation="io.github.whimthen.websocket.service.impl.HistoryServiceImpl"/>
+	</extensions>
+
+	<actions>
+		<!-- Add your actions here -->
+		<action class="io.github.whimthen.websocket.actions.TriggerAction"
+		        id="WebSocket.TriggerAction"
+		        text="WebSocket Debugger">
+			<override-text place="MainMenu" text="WebSocket Debugger"/>
+			<add-to-group group-id="ToolsMenu" anchor="last"/>
+			<!-- Add the first and second keystrokes to all keymaps  -->
+			<keyboard-shortcut keymap="$default" first-keystroke="shift meta W"/>
+			<!-- Except to the "Mac OS X" keymap and its children -->
+			<keyboard-shortcut keymap="Mac OS X" first-keystroke="shift meta W" remove="true"/>
+			<!-- The "Mac OS X 10.5+" keymap and its children will have only this keyboard shortcut for this action.  -->
+			<keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="shift meta W" replace-all="true"/>
+		</action>
+		<action id="WebSocket.ConnectAction"
+		        class="io.github.whimthen.websocket.actions.ConnectAction"
+		        icon="AllIcons.Debugger.ThreadStates.Socket"
+		        text="Connect"
+		        description="Connect websocket"/>
+		<action id="WebSocket.DisconnectAction"
+		        class="io.github.whimthen.websocket.actions.DisconnectAction"
+		        icon="AllIcons.Actions.Suspend"
+		        text="Disconnect"
+		        description="Disconnect current WebSocket"/>
+		<action id="WebSocket.ExpandAllAction"
+		        class="io.github.whimthen.websocket.actions.ExpandAllAction"
+		        icon="AllIcons.Actions.Expandall"
+		        text="Expand All"
+		        description="Expand all"/>
+		<action id="WebSocket.CollapseAllAction"
+		        class="io.github.whimthen.websocket.actions.CollapseAllAction"
+		        icon="AllIcons.Actions.Collapseall"
+		        text="Collapse All"
+		        description="Collapse all"/>
+		<action id="WebSocket.ReconnectAction"
+		        class="io.github.whimthen.websocket.actions.ReconnectAction"
+		        icon="AllIcons.Actions.Restart"
+		        text="Reconnect"
+		        description="Reconnect current websocket"/>
+		<action id="WebSocket.PauseReceiveAction"
+		        class="io.github.whimthen.websocket.actions.PauseReceiveAction"
+		        icon="AllIcons.Actions.Pause"
+		        text="Pause Received"
+		        description="Pause received websocket message"/>
+		<action id="WebSocket.AddTabAction"
+		        class="io.github.whimthen.websocket.actions.AddTabAction"
+		        icon="AllIcons.General.Add"
+		        text="New Connection"
+		        description="Add a new tab to connect websocket"/>
+		<action id="WebSocket.ClearMessageAction"
+		        class="io.github.whimthen.websocket.actions.ClearMessageAction"
+		        icon="AllIcons.Actions.GC"
+		        text="Clear Message"
+		        description="Clear messages"/>
+		<action id="WebSocket.ReceiveAction"
+		        class="io.github.whimthen.websocket.actions.ReceiveAction"
+		        icon="AllIcons.Actions.Rerun"
+		        text="Receive"
+		        description="Rereceive websocket messages"/>
+	</actions>
+
+</idea-plugin>
