@@ -2,9 +2,9 @@ package io.github.whimthen.websocket.connection;
 
 import io.netty.channel.nio.NioEventLoopGroup;
 
-public class WebSocketClient {
+public class WebsocketClient {
 
-	public static void connect(String wsUrl) {
+	public static void connect(String url) {
 		new NioEventLoopGroup();
 	}
 

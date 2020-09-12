@@ -3,7 +3,7 @@ package io.github.whimthen.websocket.actions;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.Presentation;
-import io.github.whimthen.websocket.WebSocketToolWindow;
+import io.github.whimthen.websocket.WsToolWindow;
 import io.github.whimthen.websocket.utils.ComponentUtil;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,11 +15,11 @@ public class PauseReceiveAction extends AnAction {
 	public void update(@NotNull AnActionEvent e) {
 		super.update(e);
 		Presentation presentation = e.getPresentation();
-		presentation.setEnabled(WebSocketToolWindow.getPanel().isConnect());
-		if (WebSocketToolWindow.getPanel().isPauseReceived()) {
+		presentation.setEnabled(WsToolWindow.getPanel().isConnect());
+		if (WsToolWindow.getPanel().isPauseReceived()) {
 			AnAction pause   = ComponentUtil.getPauseAction();
 			AnAction receive = ComponentUtil.getReceiveAction();
-			WebSocketToolWindow.getActionGroup().replaceAction(receive, pause);
+			WsToolWindow.getActionGroup().replaceAction(receive, pause);
 		}
 	}
 
@@ -31,12 +31,12 @@ public class PauseReceiveAction extends AnAction {
 	public void togglePaused() {
 		AnAction pause   = ComponentUtil.getPauseAction();
 		AnAction receive = ComponentUtil.getReceiveAction();
-		boolean  paused = WebSocketToolWindow.getPanel().isPauseReceived();
-		WebSocketToolWindow.getPanel().setPauseReceived(!paused);
+		boolean  paused = WsToolWindow.getPanel().isPauseReceived();
+		WsToolWindow.getPanel().setPauseReceived(!paused);
 		if (paused) {
-			WebSocketToolWindow.getActionGroup().replaceAction(receive, pause);
+			WsToolWindow.getActionGroup().replaceAction(receive, pause);
 		} else {
-			WebSocketToolWindow.getActionGroup().replaceAction(pause, receive);
+			WsToolWindow.getActionGroup().replaceAction(pause, receive);
 		}
 	}
 

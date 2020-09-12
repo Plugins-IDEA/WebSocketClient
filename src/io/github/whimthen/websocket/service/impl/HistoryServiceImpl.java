@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-@State(name = "io.github.whimthen.websocket", storages = {
+@State(name = "io.github.whimthen.websocket.History", storages = {
 	@Storage(value = "io.github.whimthen.websocket.xml")
 })
 public class HistoryServiceImpl implements HistoryService {
@@ -29,7 +29,7 @@ public class HistoryServiceImpl implements HistoryService {
 
 	@Override
 	public State get() {
-		State state = Objects.isNull(getState()) ? new State() : getState();
+		State state = Objects.isNull(this.state) ? new State() : this.state;
 		if (Objects.isNull(state.urls))
 			state.urls = new ArrayList<>();
 		return state;

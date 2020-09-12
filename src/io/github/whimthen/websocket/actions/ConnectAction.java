@@ -9,16 +9,14 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComponentValidator;
 import com.intellij.openapi.ui.ValidationInfo;
 import com.intellij.ui.AnimatedIcon;
-import io.github.whimthen.websocket.WebSocketToolWindow;
+import io.github.whimthen.websocket.WsToolWindow;
 import io.github.whimthen.websocket.service.HistoryService;
 import io.github.whimthen.websocket.utils.ComponentUtil;
 import io.github.whimthen.websocket.utils.ConnectionUtil;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.Icon;
-import javax.swing.JComponent;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,7 +28,7 @@ public class ConnectAction extends AnAction {
 
 	@Override
 	public void actionPerformed(@NotNull AnActionEvent e) {
-		JTextField address = WebSocketToolWindow.getPanel().getAddressTextField();
+		JTextField address = WsToolWindow.getPanel().getAddressTextField();
 		String addressText = address.getText();
 		Project    project = e.getProject();
 		ValidationInfo validationInfo = null;
@@ -59,11 +57,11 @@ public class ConnectAction extends AnAction {
 		// connected
 		address.setEditable(false);
 		presentation.setIcon(connectIcon);
-		WebSocketToolWindow.getActionGroup().replaceAction(connect, reconnect);
-		WebSocketToolWindow.getPanel().setConnect(true);
+		WsToolWindow.getActionGroup().replaceAction(connect, reconnect);
+		WsToolWindow.getPanel().setConnect(true);
 		ComponentUtil.getDisConnectAction().update(e);
 		ComponentUtil.getPauseAction().update(e);
-		WebSocketToolWindow.selectedContent.setIcon(AllIcons.Debugger.ThreadStates.Socket);
+		WsToolWindow.selectedContent.setIcon(AllIcons.Debugger.ThreadStates.Socket);
 		if (StringUtils.isNotBlank(addressText)) {
 			Pattern pattern = ConnectionUtil.getAddressPattern();
 			Matcher matcher = pattern.matcher(addressText);
@@ -73,18 +71,16 @@ public class ConnectAction extends AnAction {
 					addressText = addressText.substring(0, addressText.indexOf("/"));
 				}
 			}
-			WebSocketToolWindow.selectedContent.setDisplayName(addressText);
+			WsToolWindow.selectedContent.setDisplayName(addressText);
 		}
 	}
 
 	private void focusAndTip(JComponent address, Project project, ValidationInfo validationInfo) {
-		if (WebSocketToolWindow.getPanel().getAddressTextField().hasFocus()) {
+		if (WsToolWindow.getPanel().getAddressTextField().hasFocus()) {
 			addressTip(project, validationInfo);
 		} else {
 			address.requestFocus(true);
-			ApplicationManager.getApplication().invokeLater(() -> {
-				addressTip(project, validationInfo);
-			});
+			ApplicationManager.getApplication().invokeLater(() -> addressTip(project, validationInfo));
 		}
 	}
 
@@ -102,6 +98,7 @@ public class ConnectAction extends AnAction {
 			if (Objects.nonNull(this.validator)) {
 				return this.validator;
 			}
+
 			this.validator = new ComponentValidator(project);
 			return this.validator;
 		}
